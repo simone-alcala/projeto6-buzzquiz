@@ -63,3 +63,41 @@ main, .yourQuizzes, .allQuizzes{
   bottom: 7px;
   left: 18px
 }
+
+/*-- CRIAR QUIZ --*/
+.box-create-quizz {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 181px;
+  border: 1px dashed #D5D5D5;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.box-create-quizz p {
+  color:#B9B9B9;
+  font-weight: 400;
+  font-size: 20px;
+  margin: 0px 10px;
+}
+
+.box-create-quizz button {
+  border: 1px dashed #EC362D;
+  border-radius: 50px;
+  background-color: #E5E5E5;
+  font-weight: 400;
+  font-size: 21px;
+  color:#EC362D;
+  padding:10px;
+  margin-top: 20px;
+}
+
+/*-- Escondido --*/
+.hide {
+  display: none;
+}
+
+/*-- Tela 3 --*/
