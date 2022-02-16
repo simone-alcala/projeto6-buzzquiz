@@ -27,13 +27,14 @@ function renderQuizzes (quizzes){
   });
 }
 
-<<<<<<< HEAD
 loadQuizzes();
 
 //-- CRIAR QUIZZ --//
 function createNewQuizz() {
   const element = document.querySelector("main")
   element.classList.add("hide")
+  const buttonCreate = document.querySelector(".creatingQuiz")
+  buttonCreate.classList.remove("hide")
 }
 
 //-- --//

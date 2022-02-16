@@ -66,7 +66,6 @@ main, .yourQuizzes, .allQuizzes{
   position: absolute;
   bottom: 7px;
   left: 18px;
-<<<<<<< HEAD
 }
 
 /*-- CRIAR QUIZ --*/
@@ -75,6 +74,7 @@ main, .yourQuizzes, .allQuizzes{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 340px;
   height: 181px;
   border: 1px dashed #D5D5D5;
   border-radius: 5px;
@@ -99,18 +99,63 @@ main, .yourQuizzes, .allQuizzes{
   margin-top: 20px;
 }
 
-/*-- Escondido --*/
+/*-- Tela 3 --*/
+  /*-- Criando Quizz --*/
+  .creatingQuiz, .creatingQuiz div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .creatingQuiz div {
+    background-color:#FFFFFF ;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .creatingQuiz h1 {
+    font-weight: 700;
+    color: #000000;
+    font-size: 20px;
+    padding: 37px 0px;
+  }
+
+  input {
+    width: 100%;
+    height: 46px;
+    margin-bottom: 9px;
+    background-color: #FFFFFF;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    font-size: 19px;
+    font-style: italic;
+  }
+
+  input::placeholder {
+    color: #BABABA;
+  }
+
+  .creatingQuiz button {
+    background-color: #EC362D;
+    height: 54px;
+    border: none;
+    border-radius: 15px;
+    color: #FFF5F4;
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 29px;
+    padding: 0px 40px;
+  }
+
+  /*-- Escondido --*/
 .hide {
   display: none;
 }
 
-/*-- Tela 3 --*/
-
 /*-- --*/
 .b {
   left: 18px;
-=======
->>>>>>> a701e5998cb4031312aa58b837f293a142d5374c
   flex-wrap: wrap;
   overflow-x: hidden;
 }
@@ -121,9 +166,5 @@ main, .yourQuizzes, .allQuizzes{
 
 .hidden{
   display: none;
-<<<<<<< HEAD
 }
 
-=======
-}
->>>>>>> a701e5998cb4031312aa58b837f293a142d5374c
