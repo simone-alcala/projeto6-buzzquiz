@@ -31,3 +31,35 @@ header {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   z-index: 1;
 }
+
+main, .yourQuizzes, .allQuizzes{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.allQuizzes .quiz{
+  width: 340px;
+  height: 181px;
+}
+
+.quiz{
+  margin: 10px;
+  position: relative;
+}
+
+.quiz img{
+  border-radius: 5px;
+  width: 340px;
+  height: 181px;
+}
+
+.quiz a{
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #FFFFFF;
+  position: absolute;
+  bottom: 7px;
+  left: 18px
+}
