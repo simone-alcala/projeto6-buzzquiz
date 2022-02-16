@@ -66,6 +66,7 @@ main, .yourQuizzes, .allQuizzes{
   position: absolute;
   bottom: 7px;
   left: 18px;
+<<<<<<< HEAD
 }
 
 /*-- CRIAR QUIZ --*/
@@ -108,6 +109,8 @@ main, .yourQuizzes, .allQuizzes{
 /*-- --*/
 .b {
   left: 18px;
+=======
+>>>>>>> a701e5998cb4031312aa58b837f293a142d5374c
   flex-wrap: wrap;
   overflow-x: hidden;
 }
@@ -118,5 +121,9 @@ main, .yourQuizzes, .allQuizzes{
 
 .hidden{
   display: none;
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> a701e5998cb4031312aa58b837f293a142d5374c

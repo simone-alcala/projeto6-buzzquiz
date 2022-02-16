@@ -27,6 +27,7 @@ function renderQuizzes (quizzes){
   });
 }
 
+<<<<<<< HEAD
 loadQuizzes();
 
 //-- CRIAR QUIZZ --//
@@ -53,6 +54,9 @@ function showMain(){
 function openQuiz(quiz){
   closeMain();
 }
+
+loadQuizzes();
+
 
 loadQuizzes();
 
