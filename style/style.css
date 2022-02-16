@@ -44,29 +44,32 @@ main, .yourQuizzes, .allQuizzes{
 }
 
 .quiz{
-  margin: 10px;
+  margin: 7px;
   position: relative;
-}
-
-.quiz img{
   border-radius: 5px;
   width: 340px;
   height: 181px;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-position: center;
 }
 
-.quiz a{
+.quiz div{
+  width: 310px;
+  height: 54px;
+  display: flex;
+  align-items: center;
   font-size: 19px;
   font-weight: 400;
   line-height: 22px;
   color: #FFFFFF;
   position: absolute;
   bottom: 7px;
-  left: 18px
+  left: 18px;
 }
 
 /*-- CRIAR QUIZ --*/
 .box-create-quizz {
-  width: 700px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -101,3 +104,19 @@ main, .yourQuizzes, .allQuizzes{
 }
 
 /*-- Tela 3 --*/
+
+/*-- --*/
+.b {
+  left: 18px;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+}
+
+.quiz div:hover{
+  cursor: pointer;
+}
+
+.hidden{
+  display: none;
+}
+
