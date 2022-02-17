@@ -6,6 +6,8 @@ let qtQuizQuestions    = 0;
 let qtQuizRightAnswers = 0
 
 let validate = false;
+let qntdCreateQuestion
+let qntdCreateLevel
 
 //-- --//
 function loadQuizzes(){
@@ -49,7 +51,6 @@ function createNewQuizz() {
 function validateInfoBasicText(value) {
   if(value.length >= 65 || value.length <=18) {
     alert("Título do quizz: deve ter no mínimo 20 e no máximo 65 caracteres")
-    validate = false
   } else {
     validate = true
   }
@@ -58,8 +59,8 @@ function validateInfoBasicText(value) {
 function validateInfoBasicQuestion(value) {
   if (value <= 2) {
     alert("Quantidade de perguntas: no mínimo 3 perguntas")
-    validate = false
   } else {
+    qntdCreateQuestion = parseInt(value)
     validate = true
   }
 }
@@ -67,8 +68,8 @@ function validateInfoBasicQuestion(value) {
 function validateInfoBasicLevel(value) {
   if (value <= 1) {
     alert("Quantidade de níveis: no mínimo 2 níveis")
-    validate = false
   } else {
+    qntdCreateLevel = parseInt(value)
     validate = true
     infoBasicButtonAble()
   }
@@ -89,6 +90,50 @@ function createNewQuestions() {
   element.classList.add("hide")
   const buttonCreate = document.querySelector(".creating-question")
   buttonCreate.classList.remove("hide")
+  showNewQuestions()
+}
+
+function showNewQuestions() {
+  const element = document.querySelector(".creating-question")
+  for (let i = 0; i<qntdCreateQuestion; i++) {
+    element.innerHTML += `<div class="another-question">
+                            <div class="top-title" onclick="openCreateQuestion(this)">
+                              <h2>Pergunta ${i+1}</h2>
+                              <ion-icon name="create-outline"></ion-icon>
+                            </div>
+                            <div class="hide">
+                              <div class="space">
+                                <input type="text" placeholder="Texto da pergunta">
+                                <input type="text" placeholder="Cor de fundo da pergunta">
+                                <h2>Resposta correta</h2>
+                                <input type="text" placeholder="Resposta correta">
+                                <input type="text" placeholder="URL da imagem">
+                                <h2>Respostas incorretas</h2>
+                              <div>
+                                <input type="text" placeholder="Resposta incorreta 1">
+                                <input type="text" placeholder="URL da imagem 1">
+                              </div>
+                              <div>
+                                <input type="text" placeholder="Resposta incorreta 2">
+                                <input type="text" placeholder="URL da imagem 2">
+                              </div>
+                              <div>
+                                <input type="text" placeholder="Resposta incorreta 3">
+                                <input type="text" placeholder="URL da imagem 3">
+                              </div>
+                            </div>
+                        </div>
+                          </div>`
+  }
+}
+
+function openCreateQuestion(question) {
+  const all = question.parentNode
+  all.children[1].classList.toggle("hide")
+}
+
+function validateNewQuestion() {
+  
 }
 
 //-- CRIAR NÍVEIS --//
