@@ -1,9 +1,13 @@
+//-- VARIÁVEIS GLOBAIS --//
 let arrayQuizzes       = [];
 let arrayQuiz          = [];
 
 let qtQuizQuestions    = 0;
 let qtQuizRightAnswers = 0
 
+let validate = false;
+
+//-- --//
 function loadQuizzes(){
   let promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
   promise.then( promises => {
@@ -39,6 +43,59 @@ function createNewQuizz() {
   const element = document.querySelector("main")
   element.classList.add("hide")
   const buttonCreate = document.querySelector(".creatingQuiz")
+  buttonCreate.classList.remove("hide")
+}
+
+function validateInfoBasicText(value) {
+  if(value.length >= 65 || value.length <=18) {
+    alert("Título do quizz: deve ter no mínimo 20 e no máximo 65 caracteres")
+    validate = false
+  } else {
+    validate = true
+  }
+}
+
+function validateInfoBasicQuestion(value) {
+  if (value <= 2) {
+    alert("Quantidade de perguntas: no mínimo 3 perguntas")
+    validate = false
+  } else {
+    validate = true
+  }
+}
+
+function validateInfoBasicLevel(value) {
+  if (value <= 1) {
+    alert("Quantidade de níveis: no mínimo 2 níveis")
+    validate = false
+  } else {
+    validate = true
+    infoBasicButtonAble()
+  }
+}
+
+function infoBasicButtonAble() {
+  const element = document.querySelector(".creatingQuiz button")
+  if (validate === true) {
+    element.classList.remove("hide")
+  }
+}
+
+//Se os três estiverem true, habilitar o botão (Como no Driven Eats)
+
+//-- CRIAR NOVAS QUESTÕES --// 
+function createNewQuestions() {
+  const element = document.querySelector(".creatingQuiz")
+  element.classList.add("hide")
+  const buttonCreate = document.querySelector(".creating-question")
+  buttonCreate.classList.remove("hide")
+}
+
+//-- CRIAR NÍVEIS --//
+function createLevels() {
+  const element = document.querySelector(".creating-question")
+  element.classList.add("hide")
+  const buttonCreate = document.querySelector(".creating-levels")
   buttonCreate.classList.remove("hide")
 }
 
