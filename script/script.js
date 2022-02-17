@@ -42,7 +42,6 @@ function createNewQuizz() {
   buttonCreate.classList.remove("hide")
 }
 
-//-- VALIDAR CRIAÇÃO --// 
 function validateInfoBasic() {
   const element = document.querySelectorAll(".creatingQuiz div input")
   const title = element[0].value.toString()
@@ -50,19 +49,33 @@ function validateInfoBasic() {
   const qntdLevel = element[3].value
   if (title.length >= 65 || title.length <= 18) {
     alert("Título do quizz: deve ter no mínimo 20 e no máximo 65 caracteres")
+    //Função que perde o foco no próprio INPUT - Utilizar o Blur
   }
   if (qntdQuestion <= 2) {
     alert("Quantidade de perguntas: no mínimo 3 perguntas")
+    //Função que perde o foco no próprio INPUT - Utilaizar o Blur
   }
   if (qntdLevel <= 1) {
     alert("Quantidade de níveis: no mínimo 2 níveis")
+    //Função que perde o foco no próprio INPUT - Utilizar o Blur
   }
 }
 
+//Se os três estiverem true, habilitar o botão (Como no Driven Eats)
+
+//-- CRIAR NOVAS QUESTÕES --// 
 function createNewQuestions() {
   const element = document.querySelector(".creatingQuiz")
   element.classList.add("hide")
   const buttonCreate = document.querySelector(".creating-question")
+  buttonCreate.classList.remove("hide")
+}
+
+//-- CRIAR NÍVEIS --//
+function createLevels() {
+  const element = document.querySelector(".creating-question")
+  element.classList.add("hide")
+  const buttonCreate = document.querySelector(".creating-levels")
   buttonCreate.classList.remove("hide")
 }
 

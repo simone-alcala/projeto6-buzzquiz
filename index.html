@@ -42,7 +42,7 @@
   <section class="creatingQuiz hide">
     <h1>Comece pelo começo</h1>
     <div>
-      <input type="text" placeholder="Título do seu quizz">
+      <input type="text" placeholder="Título do seu quizz" onblur="validateInfoBasic()"> <!--ARRUMAR AQUI-->
       <input type="url" placeholder="URL da imagem do seu quizz">
       <input type="number" placeholder="Quantidade de perguntas do quizz">
       <input type="number" placeholder="Quantidade de níveis do quizz">
@@ -50,7 +50,7 @@
     <button onclick="createNewQuestions()">Prosseguir pra criar perguntas</button>
   </section>
 
-  <!-- CRIAR QUESTÕES -->
+  <!-- CRIAR QUESTÕES --> <!--Vai ser gerado via JS-->
   <section class="creating-question hide">
     <h2>Crie suas perguntas</h2>
     <div class="space">
@@ -86,11 +86,29 @@
       <h2>Pergunta 3</h2>
       <ion-icon name="create-outline"></ion-icon>
     </div>
-    <button onclick="">Prosseguir pra criar níveis</button>
+    <button onclick="createLevels()">Prosseguir pra criar níveis</button>
   </section>
 
-  <!-- CRIAR NÍVEIS -->
-  
+  <!-- CRIAR NÍVEIS --> <!-- Vai ser gerado via JS-->
+  <section class="creating-levels hide">
+    <h2>Agora, decida os níveis!</h2>
+    <div>
+      <h2>Nível 1</h2>
+      <input type="text" placeholder="Título do nível">
+      <input type="text" placeholder="% de acerto mínima">
+      <input type="text" placeholder="URL da imagem do nível">
+      <input type="text" placeholder="Descrição do nível">
+    </div>
+    <div class="another-level">
+      <h2>Nível 2</h2>
+      <ion-icon name="create-outline"></ion-icon>
+    </div>
+    <div class="another-level">
+      <h2>Nível 3</h2>
+      <ion-icon name="create-outline"></ion-icon>
+    </div>
+    <button>Finalizar Quizz</button>
+  </section>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
