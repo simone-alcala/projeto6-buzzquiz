@@ -1,4 +1,8 @@
-let arrayQuizzes = [];
+let arrayQuizzes       = [];
+let arrayQuiz          = [];
+
+let qtQuizQuestions    = 0;
+let qtQuizRightAnswers = 0
 
 function loadQuizzes(){
   let promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -30,8 +34,6 @@ function renderQuizzes (quizzes){
   });
 }
 
-loadQuizzes();
-
 //-- CRIAR QUIZZ --//
 function createNewQuizz() {
   const element = document.querySelector("main")
@@ -57,7 +59,7 @@ function showMain(){
 
 function openQuiz(quizId){
   closeMain();
-  let arrayQuiz = arrayQuizzes.filter(quiz => quiz.id === quizId );
+  arrayQuiz = arrayQuizzes.filter(quiz => quiz.id === quizId );
   renderQuiz (arrayQuiz);
 }
 
@@ -69,32 +71,96 @@ function renderQuiz(quiz){
   let answeringQuizHTML = 
     ` <div class="header" style="${gradientTitle}">${quiz[0].title}</div> `;
     
+    qtQuizQuestions = quiz[0].questions.length;
+
     quiz[0].questions.forEach(question => {
-      
+     
+      let color = getTitleColor (question.color);
+
       answeringQuizHTML += `
         <div class="question"> 
-          <div class="title"> ${question.title}</div>
-          <input class="color hidden" value="${question.color}" /> `;
+          <div class="title" style="${color}"> ${question.title}</div>
+          <input class="color hidden" value="${question.color}" /> 
+          <div class = "answers" >`;
+
+        question.answers.sort(shuffle);  
 
         question.answers.forEach(answer => {
           answeringQuizHTML += `
-            <div class="images">
+            <div class="answer" onclick="answerQuestion(this)">
               <img src="${answer.image}" alt="${answer.image}" />
               <strong>${answer.text}</strong>
-            </div>
-            <input class="answer hidden" value="${answer.isCorrectAnswer}" /> `;
+              <input class="isCorrectAnswer hidden" value="${answer.isCorrectAnswer}" /> 
+            </div>`;
+            
         });
+        answeringQuizHTML += ` </div></div> `;
       });
-
-      answeringQuizHTML += ` </div> `;
-  
+ 
   answeringQuiz.innerHTML = answeringQuizHTML;
-  }
+}
+
+function shuffle(){
+  return Math.random() - 0.5; 
+}
 
 function gradientTitleQuiz(quizImage){
   return `background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6), 
                             rgba(0, 0, 0, 0.6)), url(	${quizImage});`;
 }
+
+function getTitleColor(color){
+  return `background-color: ${color};`;
+}
+
+function answerQuestion(marked){
+
+  marked.classList.add("marked");
+
+  let answers = [...marked.parentNode.querySelectorAll(".answer")];
+
+  answers.forEach(answer => {
+
+    let isCorrectAnswer = answer.querySelector(".isCorrectAnswer");
+
+    answer.setAttribute("onclick",null);
+    
+    if (!answer.classList.contains("marked")){
+      answer.classList.add("not-marked");
+    }
+    if (isCorrectAnswer.value === "true"){
+      answer.querySelector("strong").classList.add("correct");
+
+      if (answer.classList.contains("marked")){
+        qtQuizRightAnswers ++;
+      }
+
+    }   
+
+    if (isCorrectAnswer.value === "false"){
+      answer.querySelector("strong").classList.add("incorrect");
+    }
+  });
+
+  let nextQuestion = marked.parentNode.parentNode.nextElementSibling;
+
+  if (nextQuestion !== null) {
+    setTimeout( () => scrollPage(nextQuestion), 2000 );
+  } 
+}
+
+function scrollPage(destination){
+  destination.scrollIntoView();
+}
+
+function calculateScore(){
+
+  let total = (qtQuizRightAnswers/qtQuizQuestions*100).toFixed(0);
+
+  console.log(arrayQuiz[0].levels);
+
+}
+
 
 loadQuizzes();
 
