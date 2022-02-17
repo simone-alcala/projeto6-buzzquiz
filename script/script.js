@@ -1,5 +1,7 @@
+//-- VARIÁVEIS GLOBAIS --//
 let arrayQuizzes = [];
 
+//-- --//
 function loadQuizzes(){
   let promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
   promise.then( promises => {
@@ -37,6 +39,30 @@ function createNewQuizz() {
   const element = document.querySelector("main")
   element.classList.add("hide")
   const buttonCreate = document.querySelector(".creatingQuiz")
+  buttonCreate.classList.remove("hide")
+}
+
+//-- VALIDAR CRIAÇÃO --// 
+function validateInfoBasic() {
+  const element = document.querySelectorAll(".creatingQuiz div input")
+  const title = element[0].value.toString()
+  const qntdQuestion = element[2].value
+  const qntdLevel = element[3].value
+  if (title.length >= 65 || title.length <= 18) {
+    alert("Título do quizz: deve ter no mínimo 20 e no máximo 65 caracteres")
+  }
+  if (qntdQuestion <= 2) {
+    alert("Quantidade de perguntas: no mínimo 3 perguntas")
+  }
+  if (qntdLevel <= 1) {
+    alert("Quantidade de níveis: no mínimo 2 níveis")
+  }
+}
+
+function createNewQuestions() {
+  const element = document.querySelector(".creatingQuiz")
+  element.classList.add("hide")
+  const buttonCreate = document.querySelector(".creating-question")
   buttonCreate.classList.remove("hide")
 }
 

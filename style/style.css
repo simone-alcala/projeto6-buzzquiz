@@ -225,10 +225,61 @@ main strong{
     padding: 0px 40px;
   }
 
-  /*-- Escondido --*/
+  /*-- Criando Questão --*/
+  .creating-question { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .creating-question h2{
+    font-weight: 700;
+    color: #000000;
+    font-size: 20px;
+    padding: 20px 0px;
+  }
+
+  .creating-question .space{
+    background-color: #FFFFFF;
+    padding: 20px;
+  }
+
+  .creating-question .space div {
+    padding: 10px 0px;
+  }
+
+  .another-question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    margin-top: 24px;
+    padding: 10px;
+  }
+
+  .another-question ion-icon {
+    font-size: 26px;
+  }
+
+  .creating-question button {
+    background-color: #EC362D;
+    height: 54px;
+    border: none;
+    border-radius: 15px;
+    color: #FFF5F4;
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 29px;
+    margin-bottom:29px;
+    padding: 0px 40px;
+  }
+
+/*-- Escondido --*/
 .hide {
   display: none;
-}
+  }
 
 /*-- --*/
 .b {
