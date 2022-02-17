@@ -5,7 +5,6 @@ let arrayQuiz          = [];
 let qtQuizQuestions    = 0;
 let qtQuizRightAnswers = 0
 
-let validate = false;
 let qntdCreateQuestion
 let qntdCreateLevel
 
@@ -48,41 +47,57 @@ function createNewQuizz() {
   buttonCreate.classList.remove("hide")
 }
 
+function validateInfoBasic() {
+  const  element = document.querySelectorAll(".creatingQuiz div input")
+  const text = validateInfoBasicText(element[0].value)
+  const url = validateInfoBasicUrl(element[1].value)
+  const qntdQuestion = validateInfoBasicQuestion(element[2].value)
+  const qntdLevel = validateInfoBasicLevel(element[3].value) 
+  if ( text === true && url === true && qntdQuestion === true && qntdLevel === true) {
+    createNewQuestions()
+  }
+}
+
 function validateInfoBasicText(value) {
   if(value.length >= 65 || value.length <=18) {
-    alert("Título do quizz: deve ter no mínimo 20 e no máximo 65 caracteres")
+    alert("Complete o título corretamente!")
   } else {
-    validate = true
+    return true
+  }
+}
+
+function validateInfoBasicUrl(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  if (!!pattern.test(str)) {
+    return true
+  } else {
+    alert("Complete a URL corretamente!")
+    return false
   }
 }
 
 function validateInfoBasicQuestion(value) {
   if (value <= 2) {
-    alert("Quantidade de perguntas: no mínimo 3 perguntas")
+    alert("Complete o número corretamente!")
   } else {
     qntdCreateQuestion = parseInt(value)
-    validate = true
+    return true
   }
 }
 
 function validateInfoBasicLevel(value) {
   if (value <= 1) {
-    alert("Quantidade de níveis: no mínimo 2 níveis")
+    alert("Complete os níveis corretamente!")
   } else {
     qntdCreateLevel = parseInt(value)
-    validate = true
-    infoBasicButtonAble()
+    return true
   }
 }
-
-function infoBasicButtonAble() {
-  const element = document.querySelector(".creatingQuiz button")
-  if (validate === true) {
-    element.classList.remove("hide")
-  }
-}
-
-//Se os três estiverem true, habilitar o botão (Como no Driven Eats)
 
 //-- CRIAR NOVAS QUESTÕES --// 
 function createNewQuestions() {
