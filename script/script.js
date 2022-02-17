@@ -1,5 +1,6 @@
 //-- VARIÁVEIS GLOBAIS --//
 let arrayQuizzes = [];
+let validate = false;
 
 //-- --//
 function loadQuizzes(){
@@ -42,22 +43,38 @@ function createNewQuizz() {
   buttonCreate.classList.remove("hide")
 }
 
-function validateInfoBasic() {
-  const element = document.querySelectorAll(".creatingQuiz div input")
-  const title = element[0].value.toString()
-  const qntdQuestion = element[2].value
-  const qntdLevel = element[3].value
-  if (title.length >= 65 || title.length <= 18) {
+function validateInfoBasicText(value) {
+  if(value.length >= 65 || value.length <=18) {
     alert("Título do quizz: deve ter no mínimo 20 e no máximo 65 caracteres")
-    //Função que perde o foco no próprio INPUT - Utilizar o Blur
+    validate = false
+  } else {
+    validate = true
   }
-  if (qntdQuestion <= 2) {
+}
+
+function validateInfoBasicQuestion(value) {
+  if (value <= 2) {
     alert("Quantidade de perguntas: no mínimo 3 perguntas")
-    //Função que perde o foco no próprio INPUT - Utilaizar o Blur
+    validate = false
+  } else {
+    validate = true
   }
-  if (qntdLevel <= 1) {
+}
+
+function validateInfoBasicLevel(value) {
+  if (value <= 1) {
     alert("Quantidade de níveis: no mínimo 2 níveis")
-    //Função que perde o foco no próprio INPUT - Utilizar o Blur
+    validate = false
+  } else {
+    validate = true
+    infoBasicButtonAble()
+  }
+}
+
+function infoBasicButtonAble() {
+  const element = document.querySelector(".creatingQuiz button")
+  if (validate === true) {
+    element.classList.remove("hide")
   }
 }
 
