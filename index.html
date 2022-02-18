@@ -38,50 +38,17 @@
   <section class="creatingQuiz hide">
     <h1>Comece pelo começo</h1>
     <div>
-      <input type="text" placeholder="Título do seu quizz" onblur="validateInfoBasicText(this.value)"> 
+      <input type="text" placeholder="Título do seu quizz"> 
       <input type="url" placeholder="URL da imagem do seu quizz">
-      <input type="number" placeholder="Quantidade de perguntas do quizz" onblur="validateInfoBasicQuestion(this.value)">
-      <input type="number" placeholder="Quantidade de níveis do quizz" onblur="validateInfoBasicLevel(this.value)">
+      <input type="number" placeholder="Quantidade de perguntas do quizz">
+      <input type="number" placeholder="Quantidade de níveis do quizz">
     </div>
-    <button class="hide" onclick="createNewQuestions()">Prosseguir pra criar perguntas</button>
+    <button onclick="validateInfoBasic()">Prosseguir pra criar perguntas</button>
   </section>
 
   <!-- CRIAR QUESTÕES --> <!--Vai ser gerado via JS-->
   <section class="creating-question hide">
     <h2>Crie suas perguntas</h2>
-    <div class="space">
-      <h2>Pergunta 1</h2>
-      <input type="text" placeholder="Texto da pergunta">
-      <input type="text" placeholder="Cor de fundo da pergunta">
-      <h2>Resposta correta</h2>
-      <input type="text" placeholder="Resposta correta">
-      <input type="text" placeholder="URL da imagem">
-      <h2>Respostas incorretas</h2>
-      <div>
-        <input type="text" placeholder="Resposta incorreta 1">
-        <input type="text" placeholder="URL da imagem 1">
-      </div>
-      <div>
-        <input type="text" placeholder="Resposta incorreta 2">
-        <input type="text" placeholder="URL da imagem 2">
-      </div>
-      <div>
-        <input type="text" placeholder="Resposta incorreta 3">
-        <input type="text" placeholder="URL da imagem 3">
-      </div>
-      <div>
-        <input type="text" placeholder="Resposta incorreta 4">
-        <input type="text" placeholder="URL da imagem 4">
-      </div>
-    </div>
-    <div class="another-question">
-      <h2>Pergunta 2</h2>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
-    <div class="another-question">
-      <h2>Pergunta 3</h2>
-      <ion-icon name="create-outline"></ion-icon>
-    </div>
     <button onclick="createLevels()">Prosseguir pra criar níveis</button>
   </section>
 
