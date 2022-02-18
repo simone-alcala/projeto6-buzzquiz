@@ -201,19 +201,19 @@ function renderQuiz(quiz){
     quiz[0].questions.forEach(question => {
      
       let color = getTitleColor (question.color);
-
+      
       answeringQuizHTML += `
         <div class="question"> 
           <div class="title" style="${color}"> ${question.title}</div>
-          <input class="color hidden" value="${question.color}" /> 
           <div class = "answers" >`;
 
         question.answers.sort(shuffle);  
 
         question.answers.forEach(answer => {
+          let alt = getImageName(answer.image);
           answeringQuizHTML += `
             <div class="answer" onclick="answerQuestion(this)">
-              <img src="${answer.image}" alt="${answer.image}" />
+              <img src="${answer.image}" alt="${alt}" />
               <strong>${answer.text}</strong>
               <input class="isCorrectAnswer hidden" value="${answer.isCorrectAnswer}" /> 
             </div>`;
@@ -299,11 +299,13 @@ function calculateScore(){
 function renderScore(scoreInfo,score){
 
   let answeringQuiz = document.querySelector(".answeringQuiz");
+
+  let alt = getImageName(scoreInfo.image);
   answeringQuiz.innerHTML += 
 
        `<div class="score"> 
           <div class="title"> ${score}% de acerto: ${scoreInfo.title}</div>
-          <img src="${scoreInfo.image}" alt="${scoreInfo.image}" />
+          <img src="${scoreInfo.image}" alt="${alt}" />
           <strong>${scoreInfo.text}</strong>
         </div> 
         
@@ -330,6 +332,11 @@ function returnHome(){
 
 function closeQuizz(){
   document.querySelector(".answeringQuiz").classList.add("hidden");
+}
+
+function getImageName(imageURL){
+  let index = imageURL.lastIndexOf("/");
+  return imageURL.substring(index + 1);
 }
 
 loadQuizzes();

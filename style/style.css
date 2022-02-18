@@ -24,7 +24,6 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  /*position: fixed;*/
   color: #FFFFFF;
   font-size: 37px;
   font-weight: 700;
@@ -101,6 +100,10 @@ main strong{
   display: flex;
   align-items: center;
   justify-content: center;
+
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-position: center;
 }
 
 .answeringQuiz .question, .answeringQuiz .score{
@@ -217,13 +220,6 @@ main strong{
 .answeringQuiz .restart-quizz:hover, .answeringQuiz .return-home:hover{
   cursor: pointer;
 }
-
-
-
-
-
-
-
 
 /*-- CRIAR QUIZ --*/
 .box-create-quizz {
