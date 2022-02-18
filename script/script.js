@@ -53,7 +53,7 @@ function createNewQuizz() {
 function validateInfoBasic() {
   const  element = document.querySelectorAll(".creatingQuiz div input")
   const text = validateInfoBasicText(element[0].value)
-  const url = validateInfoBasicUrl(element[1].value)
+  const url = validateUrl(element[1].value)
   const qntdQuestion = validateInfoBasicQuestion(element[2].value)
   const qntdLevel = validateInfoBasicLevel(element[3].value) 
   if ( text === true && url === true && qntdQuestion === true && qntdLevel === true) {
@@ -69,13 +69,13 @@ function validateInfoBasicText(value) {
   }
 }
 
-function validateInfoBasicUrl(str) {
-  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+function validateUrl(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ 
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ 
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
+    '(\\#[-a-z\\d_]*)?$','i'); 
   if (!!pattern.test(str)) {
     return true
   } else {
@@ -114,33 +114,35 @@ function createNewQuestions() {
 function showNewQuestions() {
   const element = document.querySelector(".creating-question")
   for (let i = 0; i<qntdCreateQuestion; i++) {
-    element.innerHTML += `<div class="another-question">
+    element.innerHTML += `<div class="another-question card${i+1}">
                             <div class="top-title" onclick="openCreateQuestion(this)">
                               <h2>Pergunta ${i+1}</h2>
                               <ion-icon name="create-outline"></ion-icon>
                             </div>
                             <div class="hide">
-                              <div class="space">
+                              <div class="text-question">
                                 <input type="text" placeholder="Texto da pergunta">
                                 <input type="text" placeholder="Cor de fundo da pergunta">
-                                <h2>Resposta correta</h2>
+                              </div>
+                              <h2>Resposta correta</h2>
+                              <div class="right-answer">
                                 <input type="text" placeholder="Resposta correta">
                                 <input type="text" placeholder="URL da imagem">
-                                <h2>Respostas incorretas</h2>
-                              <div>
+                              </div>
+                              <h2>Respostas incorretas</h2>
+                              <div class="wrong-answer wrong1">
                                 <input type="text" placeholder="Resposta incorreta 1">
                                 <input type="text" placeholder="URL da imagem 1">
                               </div>
-                              <div>
+                              <div class="wrong-answer wrong2">
                                 <input type="text" placeholder="Resposta incorreta 2">
                                 <input type="text" placeholder="URL da imagem 2">
                               </div>
-                              <div>
+                              <div class="wrong-answer wrong3">
                                 <input type="text" placeholder="Resposta incorreta 3">
                                 <input type="text" placeholder="URL da imagem 3">
                               </div>
                             </div>
-                        </div>
                           </div>`
   }
 }
@@ -150,8 +152,96 @@ function openCreateQuestion(question) {
   all.children[1].classList.toggle("hide")
 }
 
-function validateNewQuestion() {
-  
+function validateNewQuestions() {
+  let card 
+  let validate
+  for (let i = 0; i < qntdCreateQuestion; i++) {
+    card = document.querySelector(`.another-question.card${i+1}`)
+    let va1 = validateAllTitle(card)
+    let va2 = validateAllRightAnswer(card)
+    let va3 = validateFirstWrongAnswer(card)
+    let va4 = validateOtherWrongAnswer(card)
+    if (va1 === true && va2 === true && va3 === true && va4 === true) {
+      validate = true
+    } else {
+      validate = false
+    }
+  }
+  if (validate === true) {
+    createLevels()
+  }
+}
+
+function validateAllTitle(card) {
+  const element = card.querySelectorAll(".text-question input")
+  const title = validateNewQuestionTitle(element[0].value)
+  const color = validateNewQuestionColor(element[1].value)
+  if (title === true && color === true) {
+    return true
+  }
+}
+
+function validateAllRightAnswer(card) {
+  const element = card.querySelectorAll(".right-answer input")
+  const answer = validateNewQuestionAnswer(element[0].value)
+  const url = validateUrl(element[1].value)
+  if (answer === true && url === true) {
+    return true
+  }
+}
+
+function validateFirstWrongAnswer(card) {
+  const element = card.querySelectorAll(".wrong-answer.wrong1 input")
+  const answer = validateNewQuestionAnswer(element[0].value)
+  const url = validateUrl(element[1].value)
+  if ( answer === true && url === true) {
+    return true
+  }
+}
+
+function validateOtherWrongAnswer(card) {
+  let element
+  let answer
+  let url
+  for (let i = 0; i < 2; i++) {
+    element = card.querySelectorAll(`.wrong-answer.wrong${i+2} input`)
+    if ( element[0].value != "" || element[1].value != "") {
+      answer = validateNewQuestionAnswer(element[0].value)
+      url = validateUrl(element[1].value)
+      if (answer === true && url === true) {
+        return true
+      }
+    } else {
+      return true
+    }
+  }
+}
+
+function validateNewQuestionTitle(value) {
+  if (value.length >= 19) {
+    return true
+  } else {
+    alert("Complete o texto da pergunta corretamente!")
+    return false
+  }
+}
+
+function validateNewQuestionColor(value) {
+  if (value.length == 7) {
+    return true
+  } else {
+    alert("Complete o texto hexadecimal da pergunta corretamente!")
+    return false
+  }
+}
+
+function validateNewQuestionAnswer(value) {
+  if (value === "") {
+    alert("Complete a resposta corretamente!")
+    return false
+  } else {
+    return true
+  }
 }
 
 //-- CRIAR NÍVEIS --//

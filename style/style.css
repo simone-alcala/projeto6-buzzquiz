@@ -316,15 +316,6 @@ main strong{
     padding: 20px 0px;
   }
 
-  .creating-question .space{
-    background-color: #FFFFFF;
-    padding: 20px;
-  }
-
-  .creating-question .space div {
-    padding: 10px 0px;
-  }
-
   .top-title {
     display: flex;
     align-items: center;
@@ -359,6 +350,10 @@ main strong{
     margin-top: 29px;
     margin-bottom:29px;
     padding: 0px 40px;
+  }
+
+  .wrong-question {
+    margin-bottom:20px;
   }
 
   /*-- CRIANDO NÍVEIS --*/
