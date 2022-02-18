@@ -3,7 +3,8 @@ let arrayQuizzes       = [];
 let arrayQuiz          = [];
 
 let qtQuizQuestions    = 0;
-let qtQuizRightAnswers = 0
+let qtQuizRightAnswers = 0;
+let questionsAnswered  = 0;
 
 let validate = false;
 
@@ -17,7 +18,6 @@ function loadQuizzes(){
 
   promise.catch( erro => {
     console.error(erro.response);
-    alert("Não carregou - DEPOIS VOU TIRAR A MENSAGEM");
   });
 }
 
@@ -26,6 +26,9 @@ function setArrayQuizzes(promise){
 }
 
 function renderQuizzes (quizzes){
+
+  window.scrollTo({ top: 0, behavior: 'smooth' }); 
+
   let allQuizzes = document.querySelector(".allQuizzes");
   
   allQuizzes.innerHTML="";
@@ -121,8 +124,13 @@ function openQuiz(quizId){
 }
 
 function renderQuiz(quiz){
-  let answeringQuiz = document.querySelector(".answeringQuiz");
 
+  qtQuizRightAnswers = 0;
+  questionsAnswered  = 0;
+
+  document.querySelector("head").scrollIntoView(true);
+
+  let answeringQuiz = document.querySelector(".answeringQuiz");
   let gradientTitle = gradientTitleQuiz (quiz[0].image);
 
   let answeringQuizHTML = 
@@ -172,6 +180,8 @@ function getTitleColor(color){
 
 function answerQuestion(marked){
 
+  questionsAnswered ++;
+
   marked.classList.add("marked");
 
   let answers = [...marked.parentNode.querySelectorAll(".answer")];
@@ -202,22 +212,65 @@ function answerQuestion(marked){
   let nextQuestion = marked.parentNode.parentNode.nextElementSibling;
 
   if (nextQuestion !== null) {
-    setTimeout( () => scrollPage(nextQuestion), 2000 );
+    setTimeout( () => nextQuestion.scrollIntoView({behavior: "smooth", block: "center"}), 2000 );
   } 
-}
 
-function scrollPage(destination){
-  destination.scrollIntoView();
+  if (questionsAnswered == qtQuizQuestions){
+    setTimeout( calculateScore, 2000 );
+  }
 }
 
 function calculateScore(){
+  let scoreInfo = null;
+  let score = (qtQuizRightAnswers/qtQuizQuestions*100).toFixed(0);
+  
+  arrayQuiz[0].levels.sort( (firstElement, secondElement) => firstElement.minValue - secondElement.minValue );
 
-  let total = (qtQuizRightAnswers/qtQuizQuestions*100).toFixed(0);
+  arrayQuiz[0].levels.forEach(level => {
+    if (level.minValue <= score){
+      scoreInfo = level;
+    }
+  });
 
-  console.log(arrayQuiz[0].levels);
+  renderScore(scoreInfo,score)
 
 }
 
+function renderScore(scoreInfo,score){
+
+  let answeringQuiz = document.querySelector(".answeringQuiz");
+  answeringQuiz.innerHTML += 
+
+       `<div class="score"> 
+          <div class="title"> ${score}% de acerto: ${scoreInfo.title}</div>
+          <img src="${scoreInfo.image}" alt="${scoreInfo.image}" />
+          <strong>${scoreInfo.text}</strong>
+        </div> 
+        
+        <div class="restart-quizz" onclick="restartQuizz()">Reiniciar Quizz</div>
+        <div class="return-home"   onclick="returnHome()">Voltar para home</div> `;
+
+  document.querySelector(".score").scrollIntoView({behavior: "smooth", block: "center"})      
+}
+
+function restartQuizz(){
+  
+  document.querySelector(".answeringQuiz .title").scrollIntoView({ block:"end"});
+  /*window.scroll({ top: 0, behavior: 'smooth' });*/
+  renderQuiz(arrayQuiz);
+}
+
+
+function returnHome(){
+  closeQuizz()
+  arrayQuiz  = [];
+  showMain();
+  document.querySelector("body").scrollIntoView({ block:"start"});
+}
+
+function closeQuizz(){
+  document.querySelector(".answeringQuiz").classList.add("hidden");
+}
 
 loadQuizzes();
 

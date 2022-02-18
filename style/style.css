@@ -24,12 +24,14 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: sticky;
+  /*position: fixed;*/
   color: #FFFFFF;
   font-size: 37px;
   font-weight: 700;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   z-index: 1;
+  position: sticky;
+  top: 0;
 }
 
 main{
@@ -80,15 +82,13 @@ main strong{
 
 .quiz div:hover{
   cursor: pointer;
-/*  position: absolute;
-  bottom: 7px;
-  left: 18px;*/
 }
 
 .answeringQuiz{
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 100px;
 }
 
 .answeringQuiz .header{
@@ -103,7 +103,7 @@ main strong{
   justify-content: center;
 }
 
-.answeringQuiz .question{
+.answeringQuiz .question, .answeringQuiz .score{
   width: 375px;
   display: flex;
   flex-wrap: wrap;
@@ -123,6 +123,8 @@ main strong{
   align-items: center;
   justify-content: center;
   margin-bottom: 18px;
+  padding: 0 16px;
+  overflow-x: hidden;
 }
 
 .answeringQuiz .answers{
@@ -153,9 +155,6 @@ main strong{
   opacity: 0.3;
 }
 
-
-
-
 .answeringQuiz img{
   width: 163px;
   height: 113px;
@@ -168,7 +167,63 @@ main strong{
   color: #000000;
   margin-top: 8px;
   margin-bottom: 12px;
+  overflow-x: hidden;
 }
+
+.answeringQuiz .score .title{
+  height: 99px;
+  background-color: #EC362D;
+  overflow-x: hidden;
+}
+
+.answeringQuiz .score img{
+  width: 340px;
+  height: 255px;
+  background-color: #EC362D;
+}
+
+.answeringQuiz .score strong{
+  width: 340px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #484848;
+  margin: 15px 0;
+  line-height: 20px;
+  overflow-x: hidden;
+}
+
+.answeringQuiz .restart-quizz, .answeringQuiz .return-home{
+  width: 220.32px;
+  height: 44px;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.answeringQuiz .restart-quizz{
+  background-color: #EC362D;
+  margin-bottom: 8px;
+  color: #FFF5F4;
+}
+
+.answeringQuiz .return-home{
+  color: #818181;
+}
+
+.answeringQuiz .restart-quizz:hover, .answeringQuiz .return-home:hover{
+  cursor: pointer;
+}
+
+
+
+
+
+
+
 
 /*-- CRIAR QUIZ --*/
 .box-create-quizz {
