@@ -552,13 +552,11 @@ function getImageName(imageURL){
 function setLocalStorage(idMyNewQuiz){
 
   let myLocalQuizzes = [];
-
-  if (getLocalStorage() !== ""){
+  if (getLocalStorage() !== "" || getLocalStorage() !== null){
     myLocalQuizzes = JSON.parse(getLocalStorage())
   } 
 
   myLocalQuizzes.push(idMyNewQuiz);
-
   localStorage.setItem( "idMyNewQuiz",JSON.stringify(myLocalQuizzes) );
 }
 
@@ -570,8 +568,8 @@ function getMyQuizzes(){
 
   allQuizzesLessMine = [];
   myQuizzes = [];
-  
-  if (getLocalStorage() !== "" ){
+
+  if (getLocalStorage() !== "" || getLocalStorage() !== null){
     let myQuizzesArray = JSON.parse(getLocalStorage());
     arrayQuizzes.forEach(quiz => {      
       if ( myQuizzesArray.includes(quiz.id) ){
