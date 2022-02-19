@@ -40,18 +40,22 @@ function renderQuizzes (){
   let yourQuizzes = document.querySelector(".yourQuizzes");
   let allQuizzes = document.querySelector(".allQuizzes");
   
-  yourQuizzes.innerHTML="";
-  allQuizzes.innerHTML="";
+  if (myQuizzes.length > 0){
+    yourQuizzes.innerHTML="";
+    myQuizzes.forEach(quiz => {
+      let quizImage = gradientImageQuiz(quiz.image);
+      yourQuizzes.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
+    });
+  }
 
-  myQuizzes.forEach(quiz => {
-    let quizImage = gradientImageQuiz(quiz.image);
-    yourQuizzes.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
-  });
+  allQuizzes.innerHTML="";
 
   allQuizzesLessMine.forEach(quiz => {
     let quizImage = gradientImageQuiz(quiz.image);
     allQuizzes.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
   });
+
+  
 }
 
 //-- CRIAR QUIZZ --//
