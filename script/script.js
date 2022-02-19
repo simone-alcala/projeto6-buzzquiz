@@ -1,6 +1,8 @@
 //-- VARIÁVEIS GLOBAIS --//
 let arrayQuizzes       = [];
 let arrayQuiz          = [];
+let myQuizzes          = [];
+let allQuizzesLessMine = [];
 
 let qtQuizQuestions    = 0;
 let qtQuizRightAnswers = 0;
@@ -14,7 +16,7 @@ function loadQuizzes(){
   let promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
   promise.then( promises => {
     setArrayQuizzes(promises);
-    renderQuizzes (promises.data);   
+    //renderQuizzes (promises.data);   
   });
 
   promise.catch( erro => {
@@ -24,21 +26,28 @@ function loadQuizzes(){
 
 function setArrayQuizzes(promise){
   arrayQuizzes = promise.data.slice();
+  getMyQuizzes();
+  renderQuizzes ();
 }
 
-function renderQuizzes (quizzes){
+function renderQuizzes (){
 
   window.scrollTo({ top: 0, behavior: 'smooth' }); 
 
+  let yourQuizzes = document.querySelector(".yourQuizzes");
   let allQuizzes = document.querySelector(".allQuizzes");
   
+  yourQuizzes.innerHTML="";
   allQuizzes.innerHTML="";
 
-  quizzes.forEach(quiz => {
+  myQuizzes.forEach(quiz => {
     let quizImage = gradientImageQuiz(quiz.image);
-    
-    allQuizzes.innerHTML +=
-      `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
+    yourQuizzes.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
+  });
+
+  allQuizzesLessMine.forEach(quiz => {
+    let quizImage = gradientImageQuiz(quiz.image);
+    allQuizzes.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
   });
 }
 
@@ -372,8 +381,8 @@ function answerQuestion(marked){
 
 function calculateScore(){
   let scoreInfo = null;
-  let score = (qtQuizRightAnswers/qtQuizQuestions*100).toFixed(0);
-  
+  let score = Math.round( (qtQuizRightAnswers/qtQuizQuestions*100) );
+
   arrayQuiz[0].levels.sort( (firstElement, secondElement) => firstElement.minValue - secondElement.minValue );
 
   arrayQuiz[0].levels.forEach(level => {
@@ -412,12 +421,11 @@ function restartQuizz(){
   renderQuiz(arrayQuiz);
 }
 
-
 function returnHome(){
-  closeQuizz()
+  document.querySelector(".answeringQuiz").innerHTML="";
   arrayQuiz  = [];
+  loadQuizzes();
   showMain();
-  document.querySelector("body").scrollIntoView({ block:"start"});
 }
 
 function closeQuizz(){
@@ -427,6 +435,42 @@ function closeQuizz(){
 function getImageName(imageURL){
   let index = imageURL.lastIndexOf("/");
   return imageURL.substring(index + 1);
+}
+
+function setLocalStorage(idMyNewQuiz){
+
+  let myLocalQuizzes = [];
+
+  if (getLocalStorage() !== ""){
+    myLocalQuizzes = JSON.parse(getLocalStorage())
+  } 
+
+  myLocalQuizzes.push(idMyNewQuiz);
+
+  localStorage.setItem( "idMyNewQuiz",JSON.stringify(myLocalQuizzes) );
+}
+
+function getLocalStorage(){
+  return localStorage.getItem( "idMyNewQuiz" );
+}
+
+function getMyQuizzes(){ 
+
+  allQuizzesLessMine = [];
+  myQuizzes = [];
+  
+  if (getLocalStorage() !== "" ){
+    let myQuizzesArray = JSON.parse(getLocalStorage());
+    arrayQuizzes.forEach(quiz => {      
+      if ( myQuizzesArray.includes(quiz.id) ){
+        myQuizzes.push(quiz);
+      } else {
+        allQuizzesLessMine.push(quiz);
+      }
+    });
+  } else {
+    allQuizzesLessMine = arrayQuizzes.slice();
+  }
 }
 
 loadQuizzes();
