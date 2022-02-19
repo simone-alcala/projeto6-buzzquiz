@@ -9,7 +9,10 @@ let questionsAnswered  = 0;
 let qntdCreateQuestion
 let qntdCreateLevel
 
-//-- --//
+let titleQuiz 
+let imageQuiz 
+
+//-- CARREGAR OS QUIZZES --//
 function loadQuizzes(){
   let promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
   promise.then( promises => {
@@ -65,6 +68,7 @@ function validateInfoBasicText(value) {
   if(value.length >= 65 || value.length <=18) {
     alert("Complete o título corretamente!")
   } else {
+    titleQuiz = value
     return true
   }
 }
@@ -77,6 +81,7 @@ function validateUrl(str) {
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
     '(\\#[-a-z\\d_]*)?$','i'); 
   if (!!pattern.test(str)) {
+    imageQuiz = str
     return true
   } else {
     alert("Complete a URL corretamente!")
@@ -172,6 +177,9 @@ function validateNewQuestions() {
   }
 }
 
+let titleQuestion
+let colorQuestion
+
 function validateAllTitle(card) {
   const element = card.querySelectorAll(".text-question input")
   const title = validateNewQuestionTitle(element[0].value)
@@ -250,6 +258,110 @@ function createLevels() {
   element.classList.add("hide")
   const buttonCreate = document.querySelector(".creating-levels")
   buttonCreate.classList.remove("hide")
+  showNewLevels()
+}
+
+function showNewLevels() {
+  const element = document.querySelector(".creating-levels")
+  for (let i = 0; i < qntdCreateLevel; i++) {
+    element.innerHTML += `<div class="level card${i+1}">
+                            <div class="another-level" onclick="openCreateLevel(this)">
+                              <h2>Nível ${i+1}</h2>
+                              <ion-icon name="create-outline"></ion-icon>
+                            </div>
+                            <div class="white hide">
+                              <input type="text" placeholder="Título do nível">
+                              <input type="number" placeholder="% de acerto mínima">
+                              <input type="text" placeholder="URL da imagem do nível">
+                              <input type="text" placeholder="Descrição do nível" class="bigger">
+                            </div>
+                          </div>`
+  }
+}
+
+function openCreateLevel(level) {
+  const all = level.parentNode
+  all.children[1].classList.toggle("hide") 
+}
+
+function validateNewLevels() {
+  let card 
+  let validate
+  for (let i = 0; i < qntdCreateLevel; i++) {
+    card = document.querySelector(`.level.card${i+1}`)
+    let va1 = validateAllCard(card)
+    if (va1 === true ) {
+      validate = true
+    } else {
+      validate = false
+    }
+  }
+  if (validate === true) {
+    createSucess()
+  }
+}
+
+function validateAllCard(card) {
+  const element = card.querySelectorAll(".white input")
+  const title = validateNewLevelTitle(element[0].value)
+  const percentage = validateNewLevelPercentage(element[1].value)
+  const url = validateUrl(element[2].value)
+  const description = validateNewLevelDescription(element[3].value)
+  if (title === true && percentage === true && url === true && description === true) {
+    return true
+  }
+}
+
+function validateNewLevelTitle(value) {
+  if ( value < 10) {
+    alert("Complete os títulos corretamente!")
+    return false
+  } else {
+    return true
+  }
+}
+
+function validateNewLevelPercentage(value) {
+  if ( value < 0 || value > 100) {
+    alert("Complete a porcentagem corretamente!")
+    return false
+  } else {
+    return true
+  }
+}
+
+function validateNewLevelDescription(value) {
+  if ( value < 30) {
+    alert("Complete as descrições corretamente!")
+    return false
+  } else {
+    return true
+  }
+}
+
+function validateAtLeastOneZero(value1) {
+  if ( value1 !== 0 ) {
+    alert("Complete os níveis corretamente!")
+    return false
+  } else {
+    return true
+  }
+}
+
+//-- ENVIAR OBJETO --//
+function completeObject() {
+  let object = {
+    title: titleQuiz ,
+    image: imageQuiz,
+    questions: 0,
+    levels:0
+  }
+  return object
+}
+
+//-- QUIZZ CRIADO COM SUCESSO --// 
+function createSucess() {
+  alert("Heloooou Uorrrld")
 }
 
 //-- --//
