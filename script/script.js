@@ -12,6 +12,10 @@ let qntdCreateLevel
 let titleQuiz 
 let imageQuiz 
 
+let answerList = []
+let questionList = []
+let levelList = []
+
 //-- CARREGAR OS QUIZZES --//
 function loadQuizzes(){
   let promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -167,6 +171,7 @@ function validateNewQuestions() {
     let va3 = validateFirstWrongAnswer(card)
     let va4 = validateOtherWrongAnswer(card)
     if (va1 === true && va2 === true && va3 === true && va4 === true) {
+      questionObject(card)
       validate = true
     } else {
       validate = false
@@ -176,9 +181,6 @@ function validateNewQuestions() {
     createLevels()
   }
 }
-
-let titleQuestion
-let colorQuestion
 
 function validateAllTitle(card) {
   const element = card.querySelectorAll(".text-question input")
@@ -194,6 +196,7 @@ function validateAllRightAnswer(card) {
   const answer = validateNewQuestionAnswer(element[0].value)
   const url = validateUrl(element[1].value)
   if (answer === true && url === true) {
+    rigthAnswerObject(element[0].value, element[1].value)
     return true
   }
 }
@@ -203,6 +206,7 @@ function validateFirstWrongAnswer(card) {
   const answer = validateNewQuestionAnswer(element[0].value)
   const url = validateUrl(element[1].value)
   if ( answer === true && url === true) {
+    wrongAnswerObject(element[0].value, element[1].value)
     return true
   }
 }
@@ -213,14 +217,24 @@ function validateOtherWrongAnswer(card) {
   let url
   for (let i = 0; i < 2; i++) {
     element = card.querySelectorAll(`.wrong-answer.wrong${i+2} input`)
-    if ( element[0].value != "" || element[1].value != "") {
+    if ( element[0].value != "" && element[1].value != "") {
       answer = validateNewQuestionAnswer(element[0].value)
       url = validateUrl(element[1].value)
       if (answer === true && url === true) {
-        return true
+        wrongAnswerObject(element[0].value, element[1].value)
+        validate = true
+      } else {
+        validate = false
       }
-    } else {
-      return true
+    } else if (element[0].value == "" && element[1].value == ""){
+      alert("a")
+      return true 
+    } else if (element[0].value != "" && element[1] == "") {
+      alert("b")
+      return false
+    } else { 
+      alert("Complete o campo de resposta corretamente!")
+      break;
     }
   }
 }
@@ -291,6 +305,7 @@ function validateNewLevels() {
     card = document.querySelector(`.level.card${i+1}`)
     let va1 = validateAllCard(card)
     if (va1 === true ) {
+      levelObject(card)
       validate = true
     } else {
       validate = false
@@ -353,14 +368,55 @@ function completeObject() {
   let object = {
     title: titleQuiz ,
     image: imageQuiz,
-    questions: 0,
-    levels:0
+    questions: questionList,
+    levels:levelList
   }
   return object
 }
 
+function questionObject(card) {
+  const element = card.querySelectorAll(".text-question input")
+  const object = {
+    title: element[0].value,
+    image: element[1].value,
+    answers: answerList
+  }
+  answerList = []
+  questionList.push(object)
+}
+
+function rigthAnswerObject(answer, url) {
+  const object = {
+    text: answer,
+    image: url,
+    isCorrectAnswer: true
+  }
+  answerList.push(object)
+}
+
+function wrongAnswerObject(answer, url) {
+  const object = {
+    text: answer,
+    image: url,
+    isCorrectAnswer: false
+  }
+  answerList.push(object)
+}
+
+function levelObject(card) {
+  const element = card.querySelectorAll(".white input")
+  const object = {
+    title: element[0].value,
+    image: element[2].value,
+    text: element[3].value,
+    minValue: element[1].value
+  }
+  levelList.push(object)
+}
+
 //-- QUIZZ CRIADO COM SUCESSO --// 
 function createSucess() {
+  completeObject()
   alert("Heloooou Uorrrld")
 }
 
