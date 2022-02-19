@@ -23,11 +23,10 @@ function loadQuizzes(){
   let promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
   promise.then( promises => {
     setArrayQuizzes(promises);
-    //renderQuizzes (promises.data);   
   });
 
   promise.catch( erro => {
-    console.error(erro.response);
+    console.log(erro.response);
   });
 }
 
@@ -177,20 +176,34 @@ function openCreateQuestion(question) {
 function validateNewQuestions() {
   let card 
   let validate
+  let cardsOk = [];
+
   for (let i = 0; i < qntdCreateQuestion; i++) {
     card = document.querySelector(`.another-question.card${i+1}`)
     let va1 = validateAllTitle(card)
     let va2 = validateAllRightAnswer(card)
     let va3 = validateFirstWrongAnswer(card)
     let va4 = validateOtherWrongAnswer(card)
+
     if (va1 === true && va2 === true && va3 === true && va4 === true) {
-      questionObject(card)
+      cardsOk.push(card);
+      //questionObject(card)
       validate = true
     } else {
+      cardsOk = [];
       validate = false
     }
   }
+
   if (validate === true) {
+    cardsOk.forEach(element => { 
+      answerList = [];
+      validateAllRightAnswer(element)
+      validateFirstWrongAnswer(element)
+      validateOtherWrongAnswer(element)
+      questionObject(element);  
+    });
+
     createLevels()
   }
 }
@@ -234,16 +247,16 @@ function validateOtherWrongAnswer(card) {
       answer = validateNewQuestionAnswer(element[0].value)
       url = validateUrl(element[1].value)
       if (answer === true && url === true) {
-        wrongAnswerObject(element[0].value, element[1].value)
+        //wrongAnswerObject(element[0].value, element[1].value)
         validate = true
       } else {
         validate = false
       }
     } else if (element[0].value == "" && element[1].value == ""){
-      alert("a")
+      //alert("a")
       return true 
     } else if (element[0].value != "" && element[1] == "") {
-      alert("b")
+      //alert("b")
       return false
     } else { 
       alert("Complete o campo de resposta corretamente!")
@@ -314,17 +327,23 @@ function openCreateLevel(level) {
 function validateNewLevels() {
   let card 
   let validate
+  let cardsOk = [];
+
   for (let i = 0; i < qntdCreateLevel; i++) {
     card = document.querySelector(`.level.card${i+1}`)
     let va1 = validateAllCard(card)
     if (va1 === true ) {
-      levelObject(card)
+      cardsOk.push(card);
+      //levelObject(card)
       validate = true
     } else {
+      cardsOk = [];
       validate = false
     }
   }
+
   if (validate === true) {
+    cardsOk.forEach(element => { levelObject(element);  });
     createSucess()
   }
 }
@@ -391,7 +410,7 @@ function questionObject(card) {
   const element = card.querySelectorAll(".text-question input")
   const object = {
     title: element[0].value,
-    image: element[1].value,
+    color: element[1].value,
     answers: answerList
   }
   answerList = []
@@ -429,8 +448,20 @@ function levelObject(card) {
 
 //-- QUIZZ CRIADO COM SUCESSO --// 
 function createSucess() {
-  completeObject()
-  alert("Heloooou Uorrrld")
+  let newQuiz = completeObject();
+  sendQuiz(newQuiz);
+}
+
+function sendQuiz(newQuiz){
+  let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", newQuiz );
+  
+  promise.then( promise => {
+    setLocalStorage(promise.data.id);
+  });
+
+  promise.catch( erro => {
+    console.log(erro.response);
+  });
 }
 
 //-- --//
@@ -557,7 +588,10 @@ function calculateScore(){
 
   arrayQuiz[0].levels.sort( (firstElement, secondElement) => firstElement.minValue - secondElement.minValue );
 
+  scoreInfo = arrayQuiz[0].levels[0];
+
   arrayQuiz[0].levels.forEach(level => {
+
     if (level.minValue <= score){
       scoreInfo = level;
     }
@@ -589,7 +623,6 @@ function renderScore(scoreInfo,score){
 function restartQuizz(){
   
   document.querySelector(".answeringQuiz .title").scrollIntoView({ block:"end"});
-  /*window.scroll({ top: 0, behavior: 'smooth' });*/
   renderQuiz(arrayQuiz);
 }
 
