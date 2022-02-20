@@ -294,8 +294,9 @@ function validateNewQuestionAnswer(value) {
 function validateWrongAnswer(value1, value2) {
   if (value1 === "" && value2 === "") {
     return true
-  } else if (value1 !== "" && value !== "") {
+  } else if (value1 !== "" && value2 !== "") {
     validateUrl(value2)
+    return true 
   } else {
     alert("Complete a reposta corretamente!")
     return false
