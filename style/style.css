@@ -50,7 +50,7 @@ main{
   display: flex;
   align-items: center;
   margin-top: 30px;
-  margin-left: 8px;
+  padding: 0 20px;
 }
 
 .yourQuizzes-title strong, .allQuizzes-title strong{
@@ -75,12 +75,13 @@ main{
   height: 40px ;
   display: flex;
   align-items: center;
-  margin-left: 8px;
+  padding: 0 20px;
 }
 
 .yourQuizzes, .allQuizzes {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .allQuizzes .quiz{
@@ -89,13 +90,14 @@ main{
 }
 
 .quiz{
-  margin: 7px;
   border-radius: 5px;
   width: 340px;
   height: 181px;
   background-repeat: no-repeat;
   background-size: cover; 
   background-position: center;
+  margin: 0 10px;
+  margin-bottom: 20px
 }
 
 .quiz div{
@@ -260,11 +262,13 @@ main{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 340px;
+  /*width: 340px;*/
+  width: 100%;
   height: 181px;
   border: 1px dashed #D5D5D5;
   border-radius: 5px;
   margin-top: 20px;
+  padding: 0 20px;
 }
 
 .box-create-quizz p {
@@ -460,3 +464,59 @@ main{
   display: none;
 }
 
+@media (min-width: 800px) {
+  .yourQuizzes-title {
+    margin-top: 40px;
+  }
+  .allQuizzes-title {
+    margin-top: 30px;
+  }
+  .answeringQuiz .header{
+    height: 227px;
+    font-size: 39px;
+  }
+  .answeringQuiz .question, .answeringQuiz .score{
+    width: 769px;
+    padding: 37px;
+  }
+  .answeringQuiz .title{
+    height: 138px;
+    font-size: 23px;
+  }
+  .answeringQuiz img{
+    width: 332px;
+    height: 175px;
+  } 
+  .answeringQuiz strong{
+    width: 175px;
+    font-size: 20px;
+  }
+  .answeringQuiz .score .title{
+    height: 99px;
+  }
+  
+  .answeringQuiz .score img{
+    width: 364px;
+    height: 273px;
+  } 
+  .answeringQuiz .score strong{
+    width: 328px;
+    font-size: 19px;
+    padding: 0 10px;
+    word-wrap: break-word;
+  }
+  .answeringQuiz .restart-quizz, .answeringQuiz .return-home{
+    width: 260px;
+    height: 52px;
+    font-size: 21px;
+  }
+  .box-create-quizz {
+    margin-top: 80px;
+    padding: 0 20px;
+  }
+  .quiz{
+    margin: 0 10px;
+    margin-bottom: 20px;
+  }
+
+}

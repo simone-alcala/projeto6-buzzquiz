@@ -44,7 +44,13 @@ function renderQuizzes (){
   let allQuizzes = document.querySelector(".allQuizzes");
   
   if (myQuizzes.length > 0){
-    yourQuizzes.innerHTML="";
+
+    yourQuizzes.innerHTML=
+     `<div class="yourQuizzes-title">
+        <strong>Seus Quizzes</strong>
+        <ion-icon name="add-circle" onclick="createNewQuizz()" ></ion-icon>
+      </div>`;
+    
     myQuizzes.forEach(quiz => {
       let quizImage = gradientImageQuiz(quiz.image);
       yourQuizzes.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
