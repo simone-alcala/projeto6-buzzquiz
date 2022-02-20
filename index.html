@@ -17,8 +17,15 @@
   
   <!--  VISUALIZAR QUIZZES -->
   <main>
+     
+    <section class="center">
       <!-- CRIAR QUIZ (TEMPORÁRIO)-->
-      <strong>Seus Quizzes</strong>
+
+      <div class="yourQuizzes-title">
+        <strong>Seus Quizzes</strong>
+        <ion-icon name="add-circle" onclick="createNewQuizz()" ></ion-icon>
+      </div>
+      
       <section class="yourQuizzes">
         <div class="box-create-quizz">
           <p>Você não criou nenhum</p>
@@ -26,12 +33,17 @@
           <button onclick="createNewQuizz()">Criar Quizz</button>
         </div>
       </section>
-      
-      <strong>Todos os Quizzes</strong>
+
+      <div class="allQuizzes-title">
+        <strong>Todos os Quizzes</strong>
+      </div>
+        
       <section class="allQuizzes"> </section>
-      
+
+    </section>
+
   </main>  
-    
+
   <!--  RESPONDER QUIZZES -->
   <section class="answeringQuiz">
   </section>
