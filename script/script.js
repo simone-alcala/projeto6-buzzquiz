@@ -8,6 +8,8 @@ let qtQuizQuestions    = 0;
 let qtQuizRightAnswers = 0;
 let questionsAnswered  = 0;
 
+let contage = 0
+
 let qntdCreateQuestion
 let qntdCreateLevel
 
@@ -172,6 +174,7 @@ function showNewQuestions() {
                             </div>
                           </div>`
   }
+  element.innerHTML += `<button onclick="validateNewQuestions()">Prosseguir pra criar níveis</button>`
 }
 
 function openCreateQuestion(question) {
@@ -189,11 +192,10 @@ function validateNewQuestions() {
     let va1 = validateAllTitle(card)
     let va2 = validateAllRightAnswer(card)
     let va3 = validateFirstWrongAnswer(card)
-    let va4 = validateOtherWrongAnswer(card)
-
-    if (va1 === true && va2 === true && va3 === true && va4 === true) {
+    let va4 = validateSecondWrongAnswer(card)
+    let va5 = validateThirdthWrongAnswer(card)
+    if (va1 === true && va2 === true && va3 === true && va4 === true && va5 === true) {
       cardsOk.push(card);
-      //questionObject(card)
       validate = true
     } else {
       cardsOk = [];
@@ -206,7 +208,8 @@ function validateNewQuestions() {
       answerList = [];
       validateAllRightAnswer(element)
       validateFirstWrongAnswer(element)
-      validateOtherWrongAnswer(element)
+      validateSecondWrongAnswer(element)
+      validateThirdthWrongAnswer(element)
       questionObject(element);  
     });
 
@@ -243,32 +246,22 @@ function validateFirstWrongAnswer(card) {
   }
 }
 
-function validateOtherWrongAnswer(card) {
-  let element
-  let answer
-  let url
-  for (let i = 0; i < 2; i++) {
-    element = card.querySelectorAll(`.wrong-answer.wrong${i+2} input`)
-    if ( element[0].value != "" && element[1].value != "") {
-      answer = validateNewQuestionAnswer(element[0].value)
-      url = validateUrl(element[1].value)
-      if (answer === true && url === true) {
-        //wrongAnswerObject(element[0].value, element[1].value)
-        validate = true
-      } else {
-        validate = false
-      }
-    } else if (element[0].value == "" && element[1].value == ""){
-      //alert("a")
-      return true 
-    } else if (element[0].value != "" && element[1] == "") {
-      //alert("b")
-      return false
-    } else { 
-      alert("Complete o campo de resposta corretamente!")
-      break;
-    }
-  }
+function validateSecondWrongAnswer(card) {
+  const element = card.querySelectorAll(".wrong-answer.wrong2 input")
+  const answer = validateWrongAnswer(element[0].value, element[1].value)
+  if ( answer === true ) {
+    wrongAnswerObject(element[0].value, element[1].value)
+    return true
+  } 
+}
+
+function validateThirdthWrongAnswer(card) {
+  const element = card.querySelectorAll(".wrong-answer.wrong3 input")
+  const answer = validateWrongAnswer(element[0].value, element[1].value)
+  if ( answer === true ) {
+    wrongAnswerObject(element[0].value, element[1].value)
+    return true
+  } 
 }
 
 function validateNewQuestionTitle(value) {
@@ -298,6 +291,18 @@ function validateNewQuestionAnswer(value) {
   }
 }
 
+function validateWrongAnswer(value1, value2) {
+  if (value1 === "" && value2 === "") {
+    return true
+  } else if (value1 !== "" && value !== "") {
+    validateUrl(value2)
+  } else {
+    alert("Complete a reposta corretamente!")
+    return false
+  }
+
+}
+
 //-- CRIAR NÍVEIS --//
 function createLevels() {
   const element = document.querySelector(".creating-question")
@@ -323,6 +328,7 @@ function showNewLevels() {
                             </div>
                           </div>`
   }
+  element.innerHTML += `<button onclick="validateNewLevels()">Finalizar Quizz</button>`
 }
 
 function openCreateLevel(level) {
@@ -456,6 +462,18 @@ function levelObject(card) {
 function createSucess() {
   let newQuiz = completeObject();
   sendQuiz(newQuiz);
+  let element = document.querySelector(".creating-levels")
+  element.classList.add("hide")
+  let newElement = document.querySelector(".sucess-quizz hide")
+  newElement.classList.remove("hide")
+  loadScreenSucess(newElement)
+}
+
+function loadScreenSucess(newElement) {
+
+  newElement.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div>
+                          <div class="button" onclick="openQuiz()">Acessar Quizz</div> 
+                          <div class="return-home" onclick="returnHome()">Voltar para home</div>`
 }
 
 function sendQuiz(newQuiz){
