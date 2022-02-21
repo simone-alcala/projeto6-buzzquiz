@@ -20,6 +20,8 @@ let answerList = []
 let questionList = []
 let levelList = []
 
+let newObject 
+
 //-- CARREGAR OS QUIZZES --//
 function loadQuizzes(){
   let promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -71,6 +73,7 @@ function renderQuizzes (){
 
 //-- CRIAR QUIZZ --//
 function createNewQuizz() {
+  clearInputInformation()
   const element = document.querySelector("main")
   element.classList.add("hide")
   const buttonCreate = document.querySelector(".creatingQuiz")
@@ -140,8 +143,16 @@ function createNewQuestions() {
   showNewQuestions()
 }
 
+function clearInputInformation() {
+  let elements = [...document.querySelectorAll(".creatingQuiz div input")]
+  elements.forEach(element => {
+    element.value = ""
+  });
+}
+
 function showNewQuestions() {
   const element = document.querySelector(".creating-question")
+  element.innerHTML = `<h2>Crie suas perguntas</h2>`
   for (let i = 0; i<qntdCreateQuestion; i++) {
     element.innerHTML += `<div class="another-question card${i+1}">
                             <div class="top-title" onclick="openCreateQuestion(this)">
@@ -318,6 +329,7 @@ function createLevels() {
 
 function showNewLevels() {
   const element = document.querySelector(".creating-levels")
+  element.innerHTML = `<h2>Agora, decida os níveis!</h2>`
   for (let i = 0; i < qntdCreateLevel; i++) {
     element.innerHTML += `<div class="level card${i+1}">
                             <div class="another-level" onclick="openCreateLevel(this)">
@@ -468,16 +480,68 @@ function createSucess() {
   sendQuiz(newQuiz);
   let element = document.querySelector(".creating-levels")
   element.classList.add("hide")
-  let newElement = document.querySelector(".sucess-quizz hide")
+  let newElement = document.querySelector(".sucess-quizz.hide")
   newElement.classList.remove("hide")
-  loadScreenSucess(newElement)
 }
 
-function loadScreenSucess(newElement) {
+function loadScreenSucess(title, image) {
+  let quizImage = gradientImageQuiz(image);
+  const newElement = `<h2>Seu quizz está pronto!</h2>
+                      <div class="quiz" style="${quizImage}"> <div>${title}</div> </div>
+                      <div class="button" onclick="renderMyQuiz()">Acessar Quizz</div> 
+                      <div class="return-home" onclick="returnHome()">Voltar para home</div>`
+  pushScreen(newElement)
+}
 
-  newElement.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div>
-                          <div class="button" onclick="openQuiz()">Acessar Quizz</div> 
-                          <div class="return-home" onclick="returnHome()">Voltar para home</div>`
+function pushScreen(newElement) {
+  let element = document.querySelector(".sucess-quizz")
+  element.innerHTML = newElement
+}
+
+function renderMyQuiz(){
+  const element = document.querySelector(".sucess-quizz")
+  element.classList.add("hide")
+
+  let quiz = [newObject]
+  arrayQuiz = [newObject]
+  qtQuizRightAnswers = 0;
+  questionsAnswered  = 0;
+
+  document.querySelector("head").scrollIntoView(true);
+
+  let answeringQuiz = document.querySelector(".answeringQuiz");
+  let gradientTitle = gradientTitleQuiz (quiz[0].image);
+
+  let answeringQuizHTML = 
+    ` <div class="header" style="${gradientTitle}">${quiz[0].title}</div> `;
+    
+    qtQuizQuestions = quiz[0].questions.length;
+
+    quiz[0].questions.forEach(question => {
+     
+      let color = getTitleColor (question.color);
+      
+      answeringQuizHTML += `
+        <div class="question"> 
+          <div class="title" style="${color}"> ${question.title}</div>
+          <div class = "answers" >`;
+
+        question.answers.sort(shuffle);  
+
+        question.answers.forEach(answer => {
+          let alt = getImageName(answer.image);
+          answeringQuizHTML += `
+            <div class="answer" onclick="answerQuestion(this)">
+              <img src="${answer.image}" alt="${alt}" />
+              <strong>${answer.text}</strong>
+              <input class="isCorrectAnswer hidden" value="${answer.isCorrectAnswer}" /> 
+            </div>`;
+            
+        });
+        answeringQuizHTML += ` </div></div> `;
+      });
+ 
+  answeringQuiz.innerHTML = answeringQuizHTML;
 }
 
 function sendQuiz(newQuiz){
@@ -485,6 +549,8 @@ function sendQuiz(newQuiz){
   
   promise.then( promise => {
     setLocalStorage(promise.data.id);
+    loadScreenSucess(promise.data.title, promise.data.image)
+    newObject = promise.data
   });
 
   promise.catch( erro => {
@@ -505,6 +571,7 @@ function closeMain(){
 
 function showMain(){
   document.querySelector("main").classList.remove("hidden");
+  document.querySelector("main").classList.remove("hide");
 }
 
 function openQuiz(quizId){
@@ -655,7 +722,11 @@ function restartQuizz(){
 }
 
 function returnHome(){
+  let element = document.querySelector(".sucess-quizz")
+  element.classList.add("hide")
   document.querySelector(".answeringQuiz").innerHTML="";
+  qntdCreateLevel = 0
+  qntdCreateQuestion = 0
   arrayQuiz  = [];
   loadQuizzes();
   showMain();
