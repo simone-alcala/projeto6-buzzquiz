@@ -102,10 +102,10 @@ main{
 
 .quiz div{
   width: 310px;
-  height: 66px;
+  height: 54px;
   display: flex;
-  margin: 0 15px;
-  margin-top: 120px;
+  margin-left: 15px;
+  margin-top: 130px;
   font-size: 19px;
   font-weight: 400;
   line-height: 22px;
@@ -122,11 +122,11 @@ main{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 100px;
+  margin-bottom: 30px;
 }
 
 .answeringQuiz .header{
-  width: 97.5vw;
+  width: 100%;
   height: 142px;
   margin-bottom: 24px;
   font-size: 19px;
@@ -135,6 +135,7 @@ main{
   display: flex;
   align-items: center;
   justify-content: center;
+
   background-repeat: no-repeat;
   background-size: cover; 
   background-position: center;
@@ -199,14 +200,12 @@ main{
 
 .answeringQuiz strong{
   width: 163px;
-  height: fit-content;
   font-size: 13px;
   font-weight: 700;
   color: #000000;
   margin-top: 8px;
   margin-bottom: 12px;
-  overflow: hidden;
-  word-wrap: break-word;
+  overflow-x: hidden;
 }
 
 .answeringQuiz .score .title{
@@ -497,8 +496,6 @@ main{
   display: none;
 }
 
-
-
 @media (min-width: 600px) {
   .yourQuizzes-title {
     margin-top: 40px;
@@ -506,8 +503,10 @@ main{
   .allQuizzes-title {
     margin-top: 30px;
   }
+  .answeringQuiz {
+    margin-bottom: 80px;
+  }
   .answeringQuiz .header{
-    width: 98.5vw;
     height: 227px;
     font-size: 39px;
   }
@@ -524,10 +523,8 @@ main{
     height: 175px;
   } 
   .answeringQuiz strong{
-    width: 332px;
-    height: fit-content;
+    width: 175px;
     font-size: 20px;
-    overflow-y: hidden;
   }
   .answeringQuiz .score .title{
     height: 99px;
@@ -577,14 +574,5 @@ main{
 
   .creating-levels {
     width: 600px;
-  }
-}
-
-@media (min-width: 800px) {
-  body{
-    overflow-x: hidden;
-  }
-  .answeringQuiz .header{
-    width: 100vw;
   }
 }

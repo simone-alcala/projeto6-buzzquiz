@@ -50,12 +50,12 @@ function renderQuizzes (){
     yourQuizzes.innerHTML=
      `<div class="yourQuizzes-title">
         <strong>Seus Quizzes</strong>
-        <ion-icon name="add-circle" onclick="createNewQuizz()" ></ion-icon>
+        <ion-icon name="add-circle" onclick="createNewQuizz()" data-identifier="create-quizz" ></ion-icon>
       </div>`;
     
     myQuizzes.forEach(quiz => {
       let quizImage = gradientImageQuiz(quiz.image);
-      yourQuizzes.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
+      yourQuizzes.innerHTML += `<div class="quiz" style="${quizImage}" data-identifier="quizz-card"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
     });
   }
 
@@ -63,7 +63,7 @@ function renderQuizzes (){
 
   allQuizzesLessMine.forEach(quiz => {
     let quizImage = gradientImageQuiz(quiz.image);
-    allQuizzes.innerHTML += `<div class="quiz" style="${quizImage}"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
+    allQuizzes.innerHTML += `<div class="quiz" style="${quizImage}" data-identifier="quizz-card"> <div onclick="openQuiz(${quiz.id})">${quiz.title}</div> </div> `;
   });
 
   
@@ -155,8 +155,8 @@ function showNewQuestions() {
   const element = document.querySelector(".creating-question")
   element.innerHTML = `<h2>Crie suas perguntas</h2>`
   for (let i = 0; i<qntdCreateQuestion; i++) {
-    element.innerHTML += `<div class="another-question card${i+1}">
-                            <div class="top-title" onclick="openCreateQuestion(this)">
+    element.innerHTML += `<div class="another-question card${i+1}" data-identifier="question">
+                            <div class="top-title" onclick="openCreateQuestion(this)" data-identifer="expand">
                               <h2>Pergunta ${i+1}</h2>
                               <ion-icon name="create-outline"></ion-icon>
                             </div>
@@ -333,11 +333,11 @@ function showNewLevels() {
   element.innerHTML = `<h2>Agora, decida os níveis!</h2>`
   for (let i = 0; i < qntdCreateLevel; i++) {
     element.innerHTML += `<div class="level card${i+1}">
-                            <div class="another-level" onclick="openCreateLevel(this)">
+                            <div class="another-level" onclick="openCreateLevel(this)" data-identifier="expand">
                               <h2>Nível ${i+1}</h2>
                               <ion-icon name="create-outline"></ion-icon>
                             </div>
-                            <div class="white hide">
+                            <div class="white hide" data-identifier="level">
                               <input type="text" placeholder="Título do nível">
                               <input type="number" placeholder="% de acerto mínima">
                               <input type="text" placeholder="URL da imagem do nível">
@@ -398,7 +398,7 @@ function validateNewLevelTitle(value) {
 }
 
 function validateNewLevelPercentage(value) {
-  if ( value < 0 || value > 100) {
+  if ( value < 0 || value > 100 || value == "") {
     alert("Complete a porcentagem corretamente!")
     return false
   } else {
@@ -522,7 +522,7 @@ function renderMyQuiz(){
       let color = getTitleColor (question.color);
       
       answeringQuizHTML += `
-        <div class="question"> 
+        <div class="question" data-identifer="question"> 
           <div class="title" style="${color}"> ${question.title}</div>
           <div class = "answers" >`;
 
@@ -531,7 +531,7 @@ function renderMyQuiz(){
         question.answers.forEach(answer => {
           let alt = getImageName(answer.image);
           answeringQuizHTML += `
-            <div class="answer" onclick="answerQuestion(this)">
+            <div class="answer" onclick="answerQuestion(this)" data-identifier="answer">
               <img src="${answer.image}" alt="${alt}" />
               <strong>${answer.text}</strong>
               <input class="isCorrectAnswer hidden" value="${answer.isCorrectAnswer}" /> 
@@ -600,7 +600,7 @@ function renderQuiz(quiz){
       let color = getTitleColor (question.color);
       
       answeringQuizHTML += `
-        <div class="question"> 
+        <div class="question" data-identifier="question"> 
           <div class="title" style="${color}"> ${question.title}</div>
           <div class = "answers" >`;
 
@@ -609,7 +609,7 @@ function renderQuiz(quiz){
         question.answers.forEach(answer => {
           let alt = getImageName(answer.image);
           answeringQuizHTML += `
-            <div class="answer" onclick="answerQuestion(this)">
+            <div class="answer" onclick="answerQuestion(this)" data-identifier="answer">
               <img src="${answer.image}" alt="${alt}" />
               <strong>${answer.text}</strong>
               <input class="isCorrectAnswer hidden" value="${answer.isCorrectAnswer}" /> 
@@ -703,7 +703,7 @@ function renderScore(scoreInfo,score){
   let alt = getImageName(scoreInfo.image);
   answeringQuiz.innerHTML += 
 
-       `<div class="score"> 
+       `<div class="score" data-identifier="quizz-result"> 
           <div class="title"> ${score}% de acerto: ${scoreInfo.title}</div>
           <img src="${scoreInfo.image}" alt="${alt}" />
           <strong>${scoreInfo.text}</strong>

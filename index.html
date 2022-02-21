@@ -20,7 +20,7 @@
      
     <section class="center">
       <!-- CRIAR QUIZ (TEMPORÁRIO)-->      
-      <section class="yourQuizzes">
+      <section class="yourQuizzes" data-identifier="user-quizzes">
         <div class="box-create-quizz">
           <p>Você não criou nenhum</p>
           <p>quizz ainda :(</p>
@@ -32,7 +32,7 @@
         <strong>Todos os Quizzes</strong>
       </div>
         
-      <section class="allQuizzes"> </section>
+      <section class="allQuizzes" data-identifier="general-quizzes"> </section>
 
     </section>
 
@@ -51,7 +51,7 @@
       <input type="number" placeholder="Quantidade de perguntas do quizz" value="">
       <input type="number" placeholder="Quantidade de níveis do quizz" value="">
     </div>
-    <button onclick="validateInfoBasic()">Prosseguir pra criar perguntas</button>
+    <button onclick="validateInfoBasic()" data-identifier="create-quizz">Prosseguir pra criar perguntas</button>
   </section>
 
   <!-- CRIAR QUESTÕES --> <!-- Gerado via JS -->
