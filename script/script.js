@@ -8,8 +8,6 @@ let qtQuizQuestions    = 0;
 let qtQuizRightAnswers = 0;
 let questionsAnswered  = 0;
 
-let contage = 0
-
 let qntdCreateQuestion
 let qntdCreateLevel
 
@@ -74,6 +72,9 @@ function renderQuizzes (){
 //-- CRIAR QUIZZ --//
 function createNewQuizz() {
   clearInputInformation()
+  answerList = []
+  questionList = []
+  levelList = []
   const element = document.querySelector("main")
   element.classList.add("hide")
   const buttonCreate = document.querySelector(".creatingQuiz")
@@ -501,7 +502,6 @@ function pushScreen(newElement) {
 function renderMyQuiz(){
   const element = document.querySelector(".sucess-quizz")
   element.classList.add("hide")
-
   let quiz = [newObject]
   arrayQuiz = [newObject]
   qtQuizRightAnswers = 0;
