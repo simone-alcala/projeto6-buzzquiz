@@ -354,6 +354,7 @@ function validateNewLevels() {
     } else {
       cardsOk = [];
       validate = false
+      break
     }
   }
 
