@@ -102,10 +102,10 @@ main{
 
 .quiz div{
   width: 310px;
-  height: 54px;
+  height: 66px;
   display: flex;
-  margin-left: 15px;
-  margin-top: 130px;
+  margin: 0 15px;
+  margin-top: 120px;
   font-size: 19px;
   font-weight: 400;
   line-height: 22px;
@@ -126,7 +126,7 @@ main{
 }
 
 .answeringQuiz .header{
-  width: 100%;
+  width: 97.5vw;
   height: 142px;
   margin-bottom: 24px;
   font-size: 19px;
@@ -135,7 +135,6 @@ main{
   display: flex;
   align-items: center;
   justify-content: center;
-
   background-repeat: no-repeat;
   background-size: cover; 
   background-position: center;
@@ -200,12 +199,14 @@ main{
 
 .answeringQuiz strong{
   width: 163px;
+  height: fit-content;
   font-size: 13px;
   font-weight: 700;
   color: #000000;
   margin-top: 8px;
   margin-bottom: 12px;
-  overflow-x: hidden;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 .answeringQuiz .score .title{
@@ -496,6 +497,8 @@ main{
   display: none;
 }
 
+
+
 @media (min-width: 600px) {
   .yourQuizzes-title {
     margin-top: 40px;
@@ -504,6 +507,7 @@ main{
     margin-top: 30px;
   }
   .answeringQuiz .header{
+    width: 98.5vw;
     height: 227px;
     font-size: 39px;
   }
@@ -520,8 +524,10 @@ main{
     height: 175px;
   } 
   .answeringQuiz strong{
-    width: 175px;
+    width: 332px;
+    height: fit-content;
     font-size: 20px;
+    overflow-y: hidden;
   }
   .answeringQuiz .score .title{
     height: 99px;
@@ -571,5 +577,14 @@ main{
 
   .creating-levels {
     width: 600px;
+  }
+}
+
+@media (min-width: 800px) {
+  body{
+    overflow-x: hidden;
+  }
+  .answeringQuiz .header{
+    width: 100vw;
   }
 }
