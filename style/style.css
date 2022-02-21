@@ -481,6 +481,7 @@ main{
   }
 
 .bigger {
+  word-wrap: break-word;
   height: 200px;
 }
 

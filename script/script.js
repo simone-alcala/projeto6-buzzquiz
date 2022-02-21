@@ -200,6 +200,7 @@ function validateNewQuestions() {
     } else {
       cardsOk = [];
       validate = false
+      break
     }
   }
 
@@ -250,7 +251,9 @@ function validateSecondWrongAnswer(card) {
   const element = card.querySelectorAll(".wrong-answer.wrong2 input")
   const answer = validateWrongAnswer(element[0].value, element[1].value)
   if ( answer === true ) {
-    wrongAnswerObject(element[0].value, element[1].value)
+    if (element[0].value !== "" && element[1].value !== "") {
+      wrongAnswerObject(element[0].value, element[1].value)
+    } 
     return true
   } 
 }
@@ -259,7 +262,9 @@ function validateThirdthWrongAnswer(card) {
   const element = card.querySelectorAll(".wrong-answer.wrong3 input")
   const answer = validateWrongAnswer(element[0].value, element[1].value)
   if ( answer === true ) {
-    wrongAnswerObject(element[0].value, element[1].value)
+    if (element[0].value !== "" && element[1].value !== "") {
+      wrongAnswerObject(element[0].value, element[1].value)
+    }
     return true
   } 
 }
@@ -295,13 +300,11 @@ function validateWrongAnswer(value1, value2) {
   if (value1 === "" && value2 === "") {
     return true
   } else if (value1 !== "" && value2 !== "") {
-    validateUrl(value2)
-    return true 
+    return validateUrl(value2) 
   } else {
     alert("Complete a reposta corretamente!")
     return false
   }
-
 }
 
 //-- CRIAR NÍVEIS --//
@@ -347,7 +350,6 @@ function validateNewLevels() {
     let va1 = validateAllCard(card)
     if (va1 === true ) {
       cardsOk.push(card);
-      //levelObject(card)
       validate = true
     } else {
       cardsOk = [];
